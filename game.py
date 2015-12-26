@@ -23,6 +23,7 @@ class Game(object):
                             (SCREEN_WIDTH,SCREEN_HEIGHT), 0, 32)
 
         self.clock = pygame.time.Clock()
+        self.paused = 0
 
         self.ship = Ship(self.screen, (100,100))
         self.asteroids = []
@@ -90,7 +91,9 @@ class Game(object):
 
             time_passed = self.clock.tick(60)
             
-            self.since_last_asteroid += 1
+            if not self.paused:
+                self.since_last_asteroid += 1
+                
             if self.since_last_asteroid > self.new_asteroid_time:
 
                 self.asteroids.append(Asteroid(self.screen))
@@ -109,23 +112,27 @@ class Game(object):
                     if event.key == pygame.K_ESCAPE:
                         running = 0
                         break
-
                     if event.key == pygame.K_SPACE:
                         self.shoot()
+                    if event.key == pygame.K_p:
+                        self.paused = not self.paused
 
             # SHIP UPDATES
             self.ship.handleKeyevents(pygame.key.get_pressed())
             self.ship.keep_in_bounds(SCREEN_WIDTH, SCREEN_HEIGHT)
-            self.ship.update(time_passed)
+            if not self.paused:
+                self.ship.update(time_passed)
 
             #BULLET UPDATES
-            for bullet in self.bullets:
-                bullet.update(time_passed)
+            if not self.paused:
+                for bullet in self.bullets:
+                    bullet.update(time_passed)
             self.maintain_bullets()
 
             #ASTEROID UPDATES
-            for asteroid in self.asteroids:
-                asteroid.update(time_passed)
+            if not self.paused:
+                for asteroid in self.asteroids:
+                    asteroid.update(time_passed)
             self.maintain_asteroids()
 
             # Colisions
