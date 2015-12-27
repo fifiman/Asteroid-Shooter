@@ -41,6 +41,7 @@ class Ship(Sprite):
         self.pos = Vec2d(init_position)
         self.dir = Vec2d(0, -1) # No initial dir, changes with key_presses
 
+        self.screen_width, self.screen_height = self.screen.get_size()
         self.image = self.base_image = pygame.image.load(IMAGE_DIR)
         self.speed = SHIP_SPEED
 
@@ -57,17 +58,17 @@ class Ship(Sprite):
             if keys_pressed[key]:
                 key_to_function[key](self)
 
-    def keep_in_bounds(self, width, height):
+    def keep_in_bounds(self):
 
         if self.pos.x < 0:
             self.pos.x = 0
-        if self.pos.x > width:
-            self.pos.x = width
+        if self.pos.x > self.screen_width:
+            self.pos.x = self.screen_width
 
         if self.pos.y < 0:
             self.pos.y = 0
-        if self.pos.y > height:
-            self.pos.y = height
+        if self.pos.y > self.screen_height:
+            self.pos.y = self.screen_height
 
 
 

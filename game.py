@@ -119,7 +119,7 @@ class Game(object):
 
             # SHIP UPDATES
             self.ship.handleKeyevents(pygame.key.get_pressed())
-            self.ship.keep_in_bounds(SCREEN_WIDTH, SCREEN_HEIGHT)
+            self.ship.keep_in_bounds()
             if not self.paused:
                 self.ship.update(time_passed)
 
