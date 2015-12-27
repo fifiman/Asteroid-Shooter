@@ -117,29 +117,31 @@ class Game(object):
                     if event.key == pygame.K_p:
                         self.paused = not self.paused
 
-            # SHIP UPDATES
-            self.ship.handleKeyevents(pygame.key.get_pressed())
-            self.ship.keep_in_bounds()
-            if not self.paused:
-                self.ship.update(time_passed)
-
-            #BULLET UPDATES
-            if not self.paused:
-                for bullet in self.bullets:
-                    bullet.update(time_passed)
-            self.maintain_bullets()
-
-            #ASTEROID UPDATES
-            if not self.paused:
-                for asteroid in self.asteroids:
-                    asteroid.update(time_passed)
-            self.maintain_asteroids()
-
-            # Colisions
-            self.handle_collisions()
-
-
+            self.update(time_passed)
             self.draw()
+
+    def update(self, time_passed):
+        # Send keyboard input
+        self.ship.handleKeyevents(pygame.key.get_pressed())
+
+        # Object updates
+        if not self.paused:
+            self.ship.update(time_passed)
+
+            for bullet in self.bullets:
+                    bullet.update(time_passed)
+
+            for asteroid in self.asteroids:
+                    asteroid.update(time_passed)
+
+        # Maintenance functions
+        self.ship.keep_in_bounds()
+        self.maintain_bullets()
+        self.maintain_asteroids()
+
+        # Collisions
+        self.handle_collisions()
+
 
 
 
