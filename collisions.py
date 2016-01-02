@@ -5,7 +5,7 @@ import pygame
 def do_collide(a, b):
 
     if simple_collision(a,b):
-        return 1 ###return complex_collision(a, b)
+        return 1
 
     return 0
 
@@ -23,7 +23,6 @@ def simple_collision(a, b):
             b.pos.y - b_image_h / 2 )
 
     if a_rect.colliderect(b_rect):
-        #return 1
         return complex_collision(a, b)
     return 0
 

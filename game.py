@@ -32,7 +32,7 @@ class Game(object):
         self.running = 1
 
         # Game objects
-        self.ship = Ship(self.screen, (100,100))
+        self.ship = Ship(self.screen, (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
         self.asteroids = []
         self.bullets = []
 

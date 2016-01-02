@@ -8,7 +8,6 @@ from vec2d import Vec2d
 SHIP_SPEED = 0.1
 
 IMAGES_FOLDER = os.path.realpath(__file__ + '/../images')
-#SHIP_FILENAME = 'triangle.png'
 SHIP_FILENAME = 'ship.gif'
 
 IMAGE_DIR = os.path.join(IMAGES_FOLDER, SHIP_FILENAME)
@@ -17,13 +16,13 @@ POS_DELTA = 2
 ANGLE_DELTA = 5
 
 key_to_function = {
-    pygame.K_LEFT  : (lambda x : x.translate((-POS_DELTA,0)) ),
-    pygame.K_RIGHT : (lambda x : x.translate((POS_DELTA ,0)) ),
-    pygame.K_UP    : (lambda x : x.translate((0,-POS_DELTA)) ),
-    pygame.K_DOWN  : (lambda x : x.translate((0, POS_DELTA)) ),
+    pygame.K_j  : (lambda x : x.translate((-POS_DELTA,0)) ),
+    pygame.K_l : (lambda x : x.translate((POS_DELTA ,0)) ),
+    pygame.K_i    : (lambda x : x.translate((0,-POS_DELTA)) ),
+    pygame.K_k  : (lambda x : x.translate((0, POS_DELTA)) ),
 
-    pygame.K_z     : (lambda x : x.rotate(-ANGLE_DELTA)),
-    pygame.K_x     : (lambda x : x.rotate(ANGLE_DELTA))
+    pygame.K_a     : (lambda x : x.rotate(-ANGLE_DELTA)),
+    pygame.K_d     : (lambda x : x.rotate(ANGLE_DELTA))
 }
 
 
