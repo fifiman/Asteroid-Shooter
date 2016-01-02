@@ -40,14 +40,18 @@ class Bullet(Sprite):
 
         self.pos += displacement
 
-    def blitme(self):
-
+    def update_rect(self):
         image_w, image_h = self.image.get_size()
 
-        draw_pos = self.image.get_rect().move(
+        self.rect = self.image.get_rect().move(
             self.pos.x - image_w / 2,
             self.pos.y - image_h / 2)
-        self.screen.blit(self.image, draw_pos)
+
+    def blitme(self):
+
+        self.update_rect()
+
+        self.screen.blit(self.image, self.rect)
 
 
     def in_bounds(self):

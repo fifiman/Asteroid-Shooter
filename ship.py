@@ -78,15 +78,18 @@ class Ship(Sprite):
                                             -self.dir.angle)
 
         
+    def update_rect(self):
+        image_w, image_h = self.image.get_size()
+
+        self.rect = self.image.get_rect().move(
+            self.pos.x - image_w / 2,
+            self.pos.y - image_h / 2)
 
     def blitme(self):
 
-        image_w, image_h = self.image.get_size()
+        self.update_rect()
 
-        draw_pos = self.image.get_rect().move(
-            self.pos.x - image_w / 2,
-            self.pos.y - image_h / 2)
-        self.screen.blit(self.image, draw_pos)
+        self.screen.blit(self.image, self.rect)
 
     
 
