@@ -37,7 +37,8 @@ class Game(object):
         self.bullets = []
 
         # Scoreboard
-        self.score = Scoreboard(self.screen)
+        self.score = 0
+        self.scoreboard = Scoreboard(self.screen)
 
         # Asteroid spawning
         self.since_last_asteroid = 0
@@ -54,7 +55,7 @@ class Game(object):
     def draw(self):
         self.screen.fill(BLACK)
 
-        self.score.blitme()
+        self.scoreboard.blitme(self.score )
         self.level_text.blitme(self.level)
 
         for bullet in self.bullets:
@@ -91,7 +92,7 @@ class Game(object):
                     self.bullets = self.bullets[:i] + self.bullets[i+1:]
                     self.asteroids = self.asteroids[:j] + self.asteroids[j+1:]
 
-                    self.score.update(1)
+                    self.score += 1
                     break
 
         for i, asteroid in enumerate(self.asteroids):
@@ -163,7 +164,7 @@ class Game(object):
 
         # Check if we passed current level
 
-        if self.score.score >= self.level_limit:
+        if self.score >= self.level_limit:
             self.level += 1
             self.level_limit = next(self.level_gen)
 

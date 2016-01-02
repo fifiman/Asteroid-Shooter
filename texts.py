@@ -14,19 +14,13 @@ class Scoreboard(object):
 
         self.default_font = pygame.font.get_default_font()
         self.font = pygame.font.Font(self.default_font, SCOREBOARD_HEIGHT)
-        self.score = 0
         self.color = pygame.Color('white')
 
         self.pre_text = 'Score: '
 
-        self.text = self.pre_text + str(self.score)
+    def blitme(self, score):
+        self.text = self.pre_text + str(score)
 
-    def update(self, add_to_score):
-
-        self.score += add_to_score
-        self.text = self.pre_text + str(self.score)
-
-    def blitme(self):
         text = self.font.render(self.text, 1, self.color)
         text_width, text_height = text.get_size()
         
