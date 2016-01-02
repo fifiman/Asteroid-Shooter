@@ -32,6 +32,9 @@ class Bullet(Sprite):
 
         self.image = self.base_image = pygame.image.load(IMAGE_DIR)
 
+        # Prevent certain bug
+        self.update_rect()
+
     def update(self, time_passed):
 
         displacement = Vec2d(

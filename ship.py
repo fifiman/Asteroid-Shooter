@@ -44,6 +44,9 @@ class Ship(Sprite):
         self.image = self.base_image = pygame.image.load(IMAGE_DIR)
         self.speed = SHIP_SPEED
 
+        # Prevent certain bug
+        self.update_rect()
+
     def translate(self, delta_pos):
         self.pos += Vec2d(delta_pos)
 

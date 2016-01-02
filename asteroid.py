@@ -27,6 +27,9 @@ class Asteroid(Sprite):
         self.gen_position()
         self.gen_direction()
 
+        # Prevent certain bug
+        self.update_rect()
+
     def gen_position(self):
         DELTA = 10
 
