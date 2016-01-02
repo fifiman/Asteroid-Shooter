@@ -5,7 +5,7 @@ import collisions
 from asteroid import Asteroid
 from bullet import Bullet
 from ship import Ship
-from scoreboard import Scoreboard
+from texts import Scoreboard
 
 from collections import deque
 from utils import reverse_enumerate
@@ -24,6 +24,8 @@ class Game(object):
 
         self.clock = pygame.time.Clock()
         self.paused = 0
+        self.game_over = 0
+        self.running = 1
 
         self.ship = Ship(self.screen, (100,100))
         self.asteroids = []
@@ -77,6 +79,10 @@ class Game(object):
                     self.score.update(1)
                     break
 
+        for i, asteroid in enumerate(self.asteroids):
+            if collisions.do_collide(self.ship, asteroid):
+                self.game_over_sequence(i)
+
 
     def shoot(self):
         self.bullets.append(Bullet(
@@ -85,9 +91,7 @@ class Game(object):
 
     def run(self):
 
-        running = 1
-
-        while running:
+        while self.running:
 
             time_passed = self.clock.tick(60)
             
@@ -105,34 +109,37 @@ class Game(object):
             #KEYBOARD INPUT
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                    running = 0
+                    self.running = 0
                     break
 
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
-                        running = 0
+                        self.running = 0
                         break
                     if event.key == pygame.K_SPACE:
                         self.shoot()
                     if event.key == pygame.K_p:
                         self.paused = not self.paused
 
-            self.update(time_passed)
+            if not self.paused and not self.game_over:
+                self.update(time_passed)
+
             self.draw()
+
+            print self.game_over
+
 
     def update(self, time_passed):
         # Send keyboard input
         self.ship.handleKeyevents(pygame.key.get_pressed())
 
         # Object updates
-        if not self.paused:
-            self.ship.update(time_passed)
-
-            for bullet in self.bullets:
-                    bullet.update(time_passed)
-
-            for asteroid in self.asteroids:
-                    asteroid.update(time_passed)
+        
+        self.ship.update(time_passed)
+        for bullet in self.bullets:
+                bullet.update(time_passed)
+        for asteroid in self.asteroids:
+                asteroid.update(time_passed)
 
         # Maintenance functions
         self.ship.keep_in_bounds()
@@ -141,6 +148,17 @@ class Game(object):
 
         # Collisions
         self.handle_collisions()
+
+    def game_over_sequence(self, colliding_asteroid_index):
+        """
+        Sequence played when game is over.
+        Leave only colliding asteroid, remove all bullets.
+        """
+        self.game_over = 1
+
+        self.bullets = []
+        self.asteroids = [self.asteroids[colliding_asteroid_index]]
+
 
 
 
