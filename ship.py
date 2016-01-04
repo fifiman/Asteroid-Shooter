@@ -7,10 +7,9 @@ from vec2d import Vec2d
 
 SHIP_SPEED = 0.1
 
-IMAGES_FOLDER = os.path.realpath(__file__ + '/../images')
-SHIP_FILENAME = 'ship.gif'
+SHIP_FILENAME = './images/ship.png'
 
-IMAGE_DIR = os.path.join(IMAGES_FOLDER, SHIP_FILENAME)
+IMAGE_DIR = SHIP_FILENAME
 
 POS_DELTA = 2
 ANGLE_DELTA = 5

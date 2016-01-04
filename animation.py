@@ -22,13 +22,14 @@ class Animation(object):
 
 
     def update(self, time_passed):
-
-        self.scroll_timer.update(time_passed)
-        self.active_timer.update(time_passed)
+        if self.active:
+            self.scroll_timer.update(time_passed)
+            self.active_timer.update(time_passed)
 
     def blitme(self):
-        self.update_rect()
-        self.screen.blit(self.images[self.image_ptr], self.rect)
+        if self.active:
+            self.update_rect()
+            self.screen.blit(self.images[self.image_ptr], self.rect)
 
     def update_rect(self):
         image_w, image_h = self.images[self.image_ptr].get_size()
@@ -56,9 +57,9 @@ if __name__ == '__main__':
     clock = pygame.time.Clock()
 
     running = 1
-    images = ['images/kappa.png', 'images/asteroid.png']
+    images = ['./images/explosion%i.png'% i for i in range(1,11)]
 
-    explosion = Animation(screen, Vec2d(100,100), images, 500,-1)
+    explosion = Animation(screen, Vec2d(100,100), images, 150,150*10)
 
     while running:
         time_passed = clock.tick(60)

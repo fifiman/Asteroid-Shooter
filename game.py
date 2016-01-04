@@ -1,15 +1,17 @@
 import pygame
 import random
 import collisions
+import ship
 
+from animation import Animation
 from asteroid import Asteroid
 from bullet import Bullet
-from ship import Ship
 from texts import *
 from levels import generate_levels
 
 from collections import deque
 from utils import reverse_enumerate
+from utils import Timer
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 700, 500  
 BLACK = pygame.Color(0,0,0,0)
@@ -30,9 +32,10 @@ class Game(object):
         self.paused = 0
         self.game_over = 0
         self.running = 1
+        self.keep_drawing_ship = 1
 
         # Game objects
-        self.ship = Ship(self.screen, (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
+        self.ship = ship.Ship(self.screen, (SCREEN_WIDTH/2,SCREEN_HEIGHT/2))
         self.asteroids = []
         self.bullets = []
 
@@ -64,8 +67,12 @@ class Game(object):
         for asteroid in self.asteroids:
             asteroid.blitme()
 
-        self.ship.blitme()
+        if self.keep_drawing_ship:
+            self.ship.blitme()
 
+        # Game over sequence 
+        if self.game_over:
+            self.explosion.blitme()
 
 
         pygame.display.flip()
@@ -98,6 +105,7 @@ class Game(object):
         for i, asteroid in enumerate(self.asteroids):
             if collisions.do_collide(self.ship, asteroid):
                 self.game_over_sequence(i)
+                break
 
 
     def shoot(self):
@@ -128,6 +136,9 @@ class Game(object):
 
             if not self.paused and not self.game_over:
                 self.update(time_passed)
+
+            if self.game_over:
+                self.update_game_over_sequence(time_passed)
 
             self.draw()
 
@@ -181,19 +192,42 @@ class Game(object):
             # by making asteroid spawn faster
             self.new_asteroid_time = (random.randint(500,600) - LEVEL_TIME_CONSTANT * self.level )
 
-
-
     def game_over_sequence(self, colliding_asteroid_index):
         """
         Sequence played when game is over.
         Leave only colliding asteroid, remove all bullets.
+        Create ship explosion.
+        Make ship stop displaying, but spawn ship animation.
         """
         self.game_over = 1
+        
+        time_per_frame = 200
 
         self.bullets = []
         self.asteroids = [self.asteroids[colliding_asteroid_index]]
+            
+        self.spawn_ship_explosion(time_per_frame)
+
+        self.ship_timer = Timer(time_per_frame*4, self.stop_drawing_ship, True)
 
 
+
+    def spawn_ship_explosion(self, ms_per_frame):
+
+        explosion_images = ['./images/explosion%i.png'% i for i in range(1,11)]
+
+        self.explosion = Animation(
+                        self.screen, self.ship.pos, explosion_images,
+                        ms_per_frame, ms_per_frame * 10)
+
+
+
+    def stop_drawing_ship(self):
+        self.keep_drawing_ship = 0
+
+    def update_game_over_sequence(self, time_passed):
+        self.explosion.update(time_passed)
+        self.ship_timer.update(time_passed)
 
 
 
