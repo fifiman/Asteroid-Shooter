@@ -7,7 +7,7 @@ def reverse_enumerate(List):
 class Timer(object):
 
     def __init__(self, interval, callback, call_once=False):
-        
+
         self.interval = interval
         self.callback = callback
         self.call_once = call_once

@@ -10,7 +10,6 @@ BULLET_FILENAME = 'bullet.png'
 IMAGE_DIR = os.path.join(IMAGES_FOLDER, BULLET_FILENAME)
 
 
-
 BULLET_SPEED = 0.5
 RADIUS = 4
 WHITE = pygame.Color('white')
@@ -38,8 +37,8 @@ class Bullet(Sprite):
     def update(self, time_passed):
 
         displacement = Vec2d(
-                    self.dir.x * BULLET_SPEED * time_passed,
-                    self.dir.y * BULLET_SPEED * time_passed)
+            self.dir.x * BULLET_SPEED * time_passed,
+            self.dir.y * BULLET_SPEED * time_passed)
 
         self.pos += displacement
 
@@ -56,10 +55,8 @@ class Bullet(Sprite):
 
         self.screen.blit(self.image, self.rect)
 
-
     def in_bounds(self):
         if self.pos.x >= 0 and self.pos.x <= self.screen_width:
             if self.pos.y >= 0 and self.pos.y <= self.screen_height:
                 return 1
         return 0
-

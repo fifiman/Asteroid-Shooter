@@ -20,7 +20,7 @@ class Asteroid(Sprite):
 
         self.screen = screen
         self.screen_width, self.screen_height = self.screen.get_size()
-        
+
         self.image = self.base_image = pygame.image.load(IMAGE_DIR)
         self.time_alive = 0.0
 
@@ -38,33 +38,32 @@ class Asteroid(Sprite):
         MIN_Y = -DELTA
         MAX_Y = self.screen_height + DELTA
 
+        gen_at_top = random.randint(0, 1)
 
-        gen_at_top = random.randint(0,1)
-
-        if gen_at_top: #Asteroid above or below the screen
+        if gen_at_top:  # Asteroid above or below the screen
             x = random.randint(MIN_X, MAX_X)
             y = random.choice([MIN_Y, MAX_Y])
 
-            self.pos = Vec2d(x,y)
+            self.pos = Vec2d(x, y)
 
-        else: #Asteroid to the left or right of the screen
+        else:  # Asteroid to the left or right of the screen
             x = random.choice([MIN_X, MAX_X])
             y = random.randint(MIN_Y, MAX_Y)
 
-            self.pos = Vec2d(x,y)
+            self.pos = Vec2d(x, y)
 
     def gen_direction(self):
         """
-        Picks random point on screen, and sets direction 
+        Picks random point on screen, and sets direction
         towards that point.
         """
-        x = random.randint(0 ,self.screen_width)
+        x = random.randint(0, self.screen_width)
         y = random.randint(0, self.screen_height)
         point = Vec2d(x, y)
 
         angle = self.pos.get_angle_between(point)
 
-        self.dir = Vec2d(1,0)
+        self.dir = Vec2d(1, 0)
         self.dir.rotate(angle)
 
     def in_bounds(self):
@@ -89,8 +88,8 @@ class Asteroid(Sprite):
         self.time_alive += time_passed
 
         displacement = Vec2d(
-                time_passed * ASTEROID_SPEED * self.dir.x,
-                time_passed * ASTEROID_SPEED * self.dir.y )
+            time_passed * ASTEROID_SPEED * self.dir.x,
+            time_passed * ASTEROID_SPEED * self.dir.y)
 
         self.pos += displacement
 
@@ -99,8 +98,7 @@ class Asteroid(Sprite):
 
         self.rect = self.image.get_rect().move(
             self.pos.x - image_w / 2,
-            self.pos.y - image_h / 2 )
-
+            self.pos.y - image_h / 2)
 
     def blitme(self):
 
@@ -109,21 +107,16 @@ class Asteroid(Sprite):
         self.screen.blit(self.image, self.rect)
 
 
-
-
 if __name__ == "__main__":
 
-    one = Vec2d(2,3)
+    one = Vec2d(2, 3)
 
     two = Vec2d(4, 0)
 
-    three = Vec2d(1,0)
+    three = Vec2d(1, 0)
 
     print one.get_angle_between(two)
 
     three.rotate(one.get_angle_between(two))
 
     print three
-
-
-

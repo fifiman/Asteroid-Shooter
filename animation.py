@@ -2,6 +2,7 @@ import pygame
 from utils import Timer
 from vec2d import Vec2d
 
+
 class Animation(object):
 
     def __init__(self, screen, pos, images, scroll_period, duration=-1):
@@ -20,7 +21,6 @@ class Animation(object):
         self.scroll_timer = Timer(scroll_period, self.advance_images)
         self.active_timer = Timer(duration, self.inactivate, True)
 
-
     def update(self, time_passed):
         if self.active:
             self.scroll_timer.update(time_passed)
@@ -36,8 +36,7 @@ class Animation(object):
 
         self.rect = self.images[self.image_ptr].get_rect().move(
             self.pos.x - image_w / 2,
-            self.pos.y - image_h / 2 )
-
+            self.pos.y - image_h / 2)
 
     def advance_images(self):
         self.image_ptr = (self.image_ptr + 1) % len(self.images)
@@ -47,24 +46,23 @@ class Animation(object):
             self.active = False
 
 
-
 if __name__ == '__main__':
 
     pygame.init()
 
     screen = pygame.display.set_mode(
-                            (400,400), 0, 32)
+        (400, 400), 0, 32)
     clock = pygame.time.Clock()
 
     running = 1
-    images = ['./images/explosion%i.png'% i for i in range(1,11)]
+    images = ['./images/explosion%i.png' % i for i in range(1, 11)]
 
-    explosion = Animation(screen, Vec2d(100,100), images, 150,150*10)
+    explosion = Animation(screen, Vec2d(100, 100), images, 150, 150 * 10)
 
     while running:
         time_passed = clock.tick(60)
 
-        #KEYBOARD INPUT
+        # KEYBOARD INPUT
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = 0
@@ -72,11 +70,8 @@ if __name__ == '__main__':
 
         explosion.update(time_passed)
 
-        screen.fill( (0,0,0) )
+        screen.fill((0, 0, 0))
 
         explosion.blitme()
 
         pygame.display.flip()
-
-
-

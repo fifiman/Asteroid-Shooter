@@ -4,8 +4,8 @@ import pygame
 SCOREBOARD_HEIGHT = 25
 LEVEL_HEIGHT = 16
 
-class Scoreboard(object):
 
+class Scoreboard(object):
 
     def __init__(self, screen):
 
@@ -23,13 +23,13 @@ class Scoreboard(object):
 
         text = self.font.render(self.text, 1, self.color)
         text_width, text_height = text.get_size()
-        
-        self.screen.blit(text, (self.screen_width - text_width - 5,10))
+
+        self.screen.blit(text, (self.screen_width - text_width - 5, 10))
 
 
 class LevelText(object):
 
-    def __init__ (self, screen):
+    def __init__(self, screen):
 
         self.screen = screen
         self.screen_width, self.screen_height = self.screen.get_size()
@@ -49,14 +49,5 @@ class LevelText(object):
         text = self.font.render(self.text, 1, self.color)
         text_width, text_height = text.get_size()
 
-        self.screen.blit(text, (self.screen_width - text_width -5,
+        self.screen.blit(text, (self.screen_width - text_width - 5,
                                 SCOREBOARD_HEIGHT + 10))
-
-
-
-
-
-
-    
-
-

@@ -14,7 +14,7 @@ from levels import generate_levels
 from utils import reverse_enumerate
 from utils import Timer
 
-SCREEN_WIDTH, SCREEN_HEIGHT = 700, 500
+SCREEN_WIDTH, SCREEN_HEIGHT = 1000, 700
 BLACK = pygame.Color(0, 0, 0, 0)
 
 LEVEL_TIME_CONSTANT = 30

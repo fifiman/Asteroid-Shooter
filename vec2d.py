@@ -1,14 +1,15 @@
-################## http://www.pygame.org/wiki/2DVectorClass ##################
+# http://www.pygame.org/wiki/2DVectorClass
 import operator
 import math
- 
+
+
 class Vec2d(object):
     """2d vector class, supports vector and scalar operators,
        and also provides a bunch of high level functions
        """
     __slots__ = ['x', 'y']
- 
-    def __init__(self, x_or_pair, y = None):
+
+    def __init__(self, x_or_pair, y=None):
         if y == None:
             self.x = x_or_pair[0]
             self.y = x_or_pair[1]

@@ -1,7 +1,7 @@
 
 def generate_levels():
     """
-    Generates level score limits. 
+    Generates level score limits.
     10, 30, 60, 100, 150, ...
     """
     level = 0
