@@ -85,7 +85,7 @@ class Asteroid(Sprite):
                 return 1
         return 0
 
-    def update(self, time_passed):
+    def update(self, time_passed, ship_pos=None):
         self.time_alive += time_passed
 
         displacement = Vec2d(
