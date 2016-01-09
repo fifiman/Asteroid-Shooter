@@ -6,12 +6,13 @@ def reverse_enumerate(List):
 
 class Timer(object):
 
-    def __init__(self, interval, callback, call_once=False):
+    def __init__(self, interval, callback, call_limit=-1):
 
         self.interval = interval
         self.callback = callback
-        self.call_once = call_once
+        self.call_limit = call_limit
         self.time = 0
+        self.calls = 0
         self.active = True
 
     def update(self, time_passed):
@@ -24,5 +25,5 @@ class Timer(object):
             self.time -= self.interval
             self.callback()
 
-            if self.call_once:
+            if self.call_limit > -1 and self.calls >= self.call_limit:
                 self.active = False
