@@ -2,14 +2,15 @@ import pygame
 
 from pygame.sprite import Sprite
 
-import os
 from vec2d import Vec2d
 
 SHIP_SPEED = 0.1
-
+MAX_HEALTH = 3
 SHIP_FILENAME = './images/ship.png'
+TRANS_SHIP_FILENAME = './images/transparent_ship.png'
 
 IMAGE_DIR = SHIP_FILENAME
+TRANS_IMAGE_DIR = TRANS_SHIP_FILENAME
 
 POS_DELTA = 2
 ANGLE_DELTA = 5
@@ -37,8 +38,14 @@ class Ship(Sprite):
         self.dir = Vec2d(0, -1)  # No initial dir, changes with key_presses
 
         self.screen_width, self.screen_height = self.screen.get_size()
-        self.image = self.base_image = pygame.image.load(IMAGE_DIR)
+        self.image = self.normal_image = pygame.image.load(IMAGE_DIR)
+        self.cur_image = self.image
+        self.transparent_image = pygame.image.load(TRANS_SHIP_FILENAME)
+
         self.speed = SHIP_SPEED
+
+        # Health
+        self.max_health = self.health = MAX_HEALTH
 
         # Prevent certain bug
         self.update_rect()
@@ -69,8 +76,14 @@ class Ship(Sprite):
 
     def update(self, time_passed):
 
-        self.image = pygame.transform.rotate(self.base_image,
+        self.image = pygame.transform.rotate(self.cur_image,
                                              -self.dir.angle)
+
+    def switch_image(self, is_invincible):
+        if is_invincible:
+            self.cur_image = self.transparent_image
+        else:
+            self.cur_image = self.normal_image
 
     def update_rect(self):
         image_w, image_h = self.image.get_size()
@@ -84,6 +97,9 @@ class Ship(Sprite):
         self.update_rect()
 
         self.screen.blit(self.image, self.rect)
+
+    def heal(self, amount):
+        self.health = max(self.health + amount, self.max_health)
 
 
 if __name__ == '__main__':

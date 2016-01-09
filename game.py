@@ -5,6 +5,7 @@ import ship
 
 from animation import Animation
 from asteroid import Asteroid
+from bar import Bar
 from bullet import Bullet
 from bulletgauge import BulletGauge
 from homing_asteroid import HomingAsteroid
@@ -15,7 +16,9 @@ from utils import reverse_enumerate
 from utils import Timer
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1000, 700
-BLACK = pygame.Color(0, 0, 0, 0)
+BLACK = pygame.Color('black')
+WHITE = pygame.Color('white')
+RED = pygame.Color('red')
 
 LEVEL_TIME_CONSTANT = 30
 
@@ -36,6 +39,10 @@ class Game(object):
         self.running = 1
         self.keep_drawing_ship = 1
 
+        # Ship states
+        self.ship_invincible = 0
+        self.ship_transparent = 0
+
         # Game objects
         self.ship = ship.Ship(
             self.screen, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
@@ -48,6 +55,12 @@ class Game(object):
 
         # Bullet Gauge
         self.bullet_gauge = BulletGauge(self.screen, 10, self.spawn_bullet)
+
+        # Health bar
+        self.health_bar = Bar(self.screen, self.ship.max_health,
+                              [30, SCREEN_HEIGHT-20,
+                               80, 10],
+                              RED, WHITE)
 
         # Asteroid spawning
         self.since_last_asteroid = 0
@@ -122,9 +135,11 @@ class Game(object):
     def draw(self):
         self.screen.fill(BLACK)
 
+        # Game HUD
         self.bullet_gauge.blitme()
         self.scoreboard.blitme(self.score)
         self.level_text.blitme(self.level)
+        self.health_bar.blitme(self.ship.health)
 
         for bullet in self.bullets:
             bullet.blitme()

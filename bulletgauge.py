@@ -13,7 +13,7 @@ SPACE = 5
 class BulletGauge(object):
 
     def __init__(self, screen, bullet_limit, shoot_function,
-                 time_limit=1000, interval=100):
+                 time_limit=700, interval=100):
 
         self.screen = screen
         self.screen_width, self.screen_height = self.screen.get_size()
