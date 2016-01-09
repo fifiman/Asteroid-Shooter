@@ -17,8 +17,8 @@ class Bar(object):
 
     def blitme(self, amount):
 
-        percentage = amount / self.maximum
-        new_rect = self.rect
+        percentage = amount / float(self.maximum)
+        new_rect = list(self.rect)
         new_rect[2] *= percentage
 
         # Draw inside
