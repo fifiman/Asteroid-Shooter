@@ -39,10 +39,6 @@ class Game(object):
         self.running = 1
         self.keep_drawing_ship = 1
 
-        # Ship states
-        self.ship_invincible = 0
-        self.ship_transparent = 0
-
         # Game objects
         self.ship = ship.Ship(
             self.screen, (SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
@@ -90,7 +86,9 @@ class Game(object):
                         self.running = 0
                         break
                     if event.key == pygame.K_SPACE:
-                        self.bullet_gauge.shoot()
+                        if not self.paused and not self.game_over:
+                            self.bullet_gauge.shoot()
+                            self.spawn_bullet()
                     if event.key == pygame.K_p:
                         self.paused = not self.paused
 
@@ -136,10 +134,11 @@ class Game(object):
         self.screen.fill(BLACK)
 
         # Game HUD
-        self.bullet_gauge.blitme()
         self.scoreboard.blitme(self.score)
         self.level_text.blitme(self.level)
-        self.health_bar.blitme(self.ship.health)
+        if not self.game_over:
+            self.bullet_gauge.blitme()
+            self.health_bar.blitme(self.ship.health)
 
         for bullet in self.bullets:
             bullet.blitme()
@@ -180,10 +179,20 @@ class Game(object):
                     self.score += 1
                     break
 
-        for i, asteroid in enumerate(self.asteroids):
-            if collisions.do_collide(self.ship, asteroid):
-                self.game_over_sequence(i)
-                break
+        if not self.ship.invincible:
+            for i, asteroid in enumerate(self.asteroids):
+                if collisions.do_collide(self.ship, asteroid):
+                    self.ship_collision(i)
+                    break  # Do not collide with anymore asteroids
+
+    def ship_collision(self, asteroid_index):
+        print "WOWOOWW"
+        self.ship.health -= 1
+
+        if self.ship.health == 0:
+            self.game_over_sequence(asteroid_index)
+        else:
+            self.ship.make_invincible()
 
     def spawn_bullet(self):
         self.bullets.append(Bullet(
@@ -234,7 +243,7 @@ class Game(object):
         self.spawn_ship_explosion(time_per_frame)
 
         self.ship_timer = Timer(
-            time_per_frame * 4, self.stop_drawing_ship, True)
+            time_per_frame * 4, self.stop_drawing_ship, 1)
 
     def spawn_ship_explosion(self, ms_per_frame):
 

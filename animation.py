@@ -19,7 +19,7 @@ class Animation(object):
         self.active = True
 
         self.scroll_timer = Timer(scroll_period, self.advance_images)
-        self.active_timer = Timer(duration, self.inactivate, True)
+        self.active_timer = Timer(duration, self.inactivate, 1)
 
     def update(self, time_passed):
         if self.active:

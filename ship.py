@@ -1,6 +1,7 @@
 import pygame
 
 from pygame.sprite import Sprite
+from utils import Timer
 
 from vec2d import Vec2d
 
@@ -44,6 +45,10 @@ class Ship(Sprite):
 
         self.speed = SHIP_SPEED
 
+        # Ship states
+        self.invincible = 0
+        self.transparent = 0
+
         # Health
         self.max_health = self.health = MAX_HEALTH
 
@@ -75,15 +80,37 @@ class Ship(Sprite):
             self.pos.y = self.screen_height
 
     def update(self, time_passed):
-
+        # Image update
         self.image = pygame.transform.rotate(self.cur_image,
                                              -self.dir.angle)
 
-    def switch_image(self, is_invincible):
-        if is_invincible:
+        # Timer updates
+        if self.invincible:
+            self.image_switch_timer.update(time_passed)
+            self.invincibility_timer.update(time_passed)
+
+    def make_invincible(self):
+        self.invincible = 1
+        self.transparent = 1
+
+        self.image_switch_timer = Timer(100, self.switch_transparency, 30)
+        self.invincibility_timer = Timer(3000, self.stop_invincibility)
+
+    def stop_invincibility(self):
+        self.invincible = 0
+        self.transparent = 0
+
+        self.switch_image()
+
+    def switch_image(self):
+        if self.transparent:
             self.cur_image = self.transparent_image
         else:
             self.cur_image = self.normal_image
+
+    def switch_transparency(self):
+        self.transparent = not self.transparent
+        self.switch_image()
 
     def update_rect(self):
         image_w, image_h = self.image.get_size()

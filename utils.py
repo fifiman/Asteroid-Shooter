@@ -23,6 +23,7 @@ class Timer(object):
 
         if self.time >= self.interval:
             self.time -= self.interval
+            self.calls += 1
             self.callback()
 
             if self.call_limit > -1 and self.calls >= self.call_limit:
