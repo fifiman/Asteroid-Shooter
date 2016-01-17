@@ -1,9 +1,10 @@
 import pygame
 from asteroid import Asteroid
 from vec2d import Vec2d
+from utils import par_dir
 
 ASTEROID_SPEED = 0.1
-IMAGE_DIR = 'images/red_asteroid.png'
+IMAGE_DIR = par_dir() + '/images/red_asteroid.png'
 ROTATE_DELTA = 4
 
 

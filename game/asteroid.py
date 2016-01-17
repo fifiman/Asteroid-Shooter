@@ -1,15 +1,12 @@
 import pygame
 from pygame.sprite import Sprite
-import os
 import random
 from vec2d import Vec2d
+from utils import par_dir
 
 ASTEROID_SPEED = 0.15
 
-IMAGES_FOLDER = os.path.realpath(__file__ + '/../images')
-ASTEROID_FILENAME = 'asteroid.png'
-
-IMAGE_DIR = os.path.join(IMAGES_FOLDER, ASTEROID_FILENAME)
+IMAGE_DIR = par_dir() + "/images/asteroid.png"
 
 
 class Asteroid(Sprite):

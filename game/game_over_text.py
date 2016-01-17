@@ -1,7 +1,8 @@
 import pygame
 from vec2d import Vec2d
+from utils import par_dir
 
-IMAGE_DIR = "./images/gameover.png"
+IMAGE_DIR = par_dir() + "/images/gameover.png"
 
 
 class GameOverText(object):

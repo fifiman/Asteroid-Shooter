@@ -1,17 +1,14 @@
 import pygame
 
 from pygame.sprite import Sprite
-from utils import Timer
+from utils import Timer, par_dir
 
 from vec2d import Vec2d
 
 SHIP_SPEED = 0.1
 MAX_HEALTH = 3
-SHIP_FILENAME = './images/ship.png'
-TRANS_SHIP_FILENAME = './images/transparent_ship.png'
-
-IMAGE_DIR = SHIP_FILENAME
-TRANS_IMAGE_DIR = TRANS_SHIP_FILENAME
+IMAGE_DIR = par_dir() + '/images/ship.png'
+TRANS_IMAGE_DIR = par_dir() + '/images/transparent_ship.png'
 
 POS_DELTA = 2
 ANGLE_DELTA = 5
@@ -41,7 +38,7 @@ class Ship(Sprite):
         self.screen_width, self.screen_height = self.screen.get_size()
         self.image = self.normal_image = pygame.image.load(IMAGE_DIR)
         self.cur_image = self.image
-        self.transparent_image = pygame.image.load(TRANS_SHIP_FILENAME)
+        self.transparent_image = pygame.image.load(TRANS_IMAGE_DIR)
 
         self.speed = SHIP_SPEED
 

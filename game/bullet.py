@@ -1,13 +1,9 @@
 import pygame
 from pygame.sprite import Sprite
-import os
 from vec2d import Vec2d
+from utils import par_dir
 
-
-IMAGES_FOLDER = os.path.realpath(__file__ + '/../images')
-BULLET_FILENAME = 'bullet.png'
-
-IMAGE_DIR = os.path.join(IMAGES_FOLDER, BULLET_FILENAME)
+IMAGE_DIR = par_dir() + '/images/bullet.png'
 
 
 BULLET_SPEED = 0.5

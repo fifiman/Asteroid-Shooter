@@ -14,7 +14,7 @@ from texts import *
 from levels import generate_levels
 
 from utils import reverse_enumerate
-from utils import Timer
+from utils import Timer, par_dir
 
 SCREEN_WIDTH, SCREEN_HEIGHT = 1000, 700
 BLACK = pygame.Color('black')
@@ -252,7 +252,7 @@ class Game(object):
 
     def spawn_ship_explosion(self, ms_per_frame):
 
-        explosion_images = ['./images/explosion%i.png' %
+        explosion_images = [par_dir() + '/images/explosion%i.png' %
                             i for i in range(1, 11)]
 
         self.explosion = Animation(
