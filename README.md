@@ -14,3 +14,6 @@ CONFIGURATION
 
 Just run `python main.py` . 
 
+
+
+![alt tag](https://imgur.com/cQwq24g)
