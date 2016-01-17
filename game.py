@@ -9,6 +9,7 @@ from bar import Bar
 from bullet import Bullet
 from bulletgauge import BulletGauge
 from homing_asteroid import HomingAsteroid
+from game_over_text import GameOverText
 from texts import *
 from levels import generate_levels
 
@@ -57,6 +58,10 @@ class Game(object):
                               [30, SCREEN_HEIGHT-20,
                                80, 10],
                               RED, WHITE)
+        # Game Over Text
+        self.game_over_text = GameOverText(self.screen)
+        self.reduce_game_over_text_alpha = Timer(
+                            100, self.game_over_text.reduce_alpha)
 
         # Asteroid spawning
         self.since_last_asteroid = 0
@@ -88,7 +93,7 @@ class Game(object):
                     if event.key == pygame.K_SPACE:
                         if not self.paused and not self.game_over:
                             self.bullet_gauge.shoot()
-                            self.spawn_bullet()
+
                     if event.key == pygame.K_p:
                         self.paused = not self.paused
 
@@ -152,6 +157,7 @@ class Game(object):
         # Game over sequence
         if self.game_over:
             self.explosion.blitme()
+            self.game_over_text.blitme()
 
         pygame.display.flip()
 
@@ -186,7 +192,6 @@ class Game(object):
                     break  # Do not collide with anymore asteroids
 
     def ship_collision(self, asteroid_index):
-        print "WOWOOWW"
         self.ship.health -= 1
 
         if self.ship.health == 0:
@@ -260,6 +265,7 @@ class Game(object):
     def update_game_over_sequence(self, time_passed):
         self.explosion.update(time_passed)
         self.ship_timer.update(time_passed)
+        self.reduce_game_over_text_alpha.update(time_passed)
 
 
 if __name__ == '__main__':
