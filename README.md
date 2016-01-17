@@ -14,6 +14,24 @@ CONFIGURATION
 
 Just run `python main.py` . 
 
+CONTROLS
+--------
+I - UP
 
+K - DOWN
+
+J - LEFT
+
+L - RIGHT
+
+
+A - ROTATE LEFT
+
+D - ROTATE RIGHT
+
+
+SPACE - SHOOT
+
+P - PAUSE
 
 ![alt tag](https://imgur.com/cQwq24g)
