@@ -55,13 +55,13 @@ class Game(object):
 
         # Health bar
         self.health_bar = Bar(self.screen, self.ship.max_health,
-                              [30, SCREEN_HEIGHT-20,
+                              [30, SCREEN_HEIGHT - 20,
                                80, 10],
                               RED, WHITE)
         # Game Over Text
         self.game_over_text = GameOverText(self.screen)
         self.reduce_game_over_text_alpha = Timer(
-                            100, self.game_over_text.reduce_alpha)
+            100, self.game_over_text.reduce_alpha)
 
         # Asteroid spawning
         self.since_last_asteroid = 0
