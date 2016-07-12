@@ -34,4 +34,5 @@ SPACE - SHOOT
 
 P - PAUSE
 
-![alt tag](https://imgur.com/cQwq24g)
+
+![Alt tag](https://i.imgur.com/cQwq24g.png)
