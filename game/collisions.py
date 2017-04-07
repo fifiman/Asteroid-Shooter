@@ -2,14 +2,15 @@ import pygame
 
 
 def do_collide(a, b):
-
     if simple_collision(a, b):
-        return 1
-
+        return complex_collision(a, b)
     return 0
 
 
 def simple_collision(a, b):
+    """
+    Simple bounding box collision detection.
+    """
     a_image_w, a_image_h = a.image.get_size()
 
     a_rect = a.image.get_rect().move(
@@ -22,11 +23,11 @@ def simple_collision(a, b):
         b.pos.x - b_image_w / 2,
         b.pos.y - b_image_h / 2)
 
-    if a_rect.colliderect(b_rect):
-        return complex_collision(a, b)
-    return 0
+    return a_rect.colliderect(b_rect)
 
 
 def complex_collision(a, b):
-
+    """
+    Collision detection through image masks.
+    """
     return pygame.sprite.collide_mask(a, b) is not None
