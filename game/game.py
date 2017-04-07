@@ -22,6 +22,7 @@ WHITE = pygame.Color('white')
 RED = pygame.Color('red')
 
 LEVEL_TIME_CONSTANT = 30
+TIME_BETWEEN_BULLETS = 150  # milliseconds
 
 
 class Game(object):
@@ -39,6 +40,7 @@ class Game(object):
         self.game_over = 0
         self.running = 1
         self.keep_drawing_ship = 1
+        self.keys_pressed = []
 
         # Game objects
         self.ship = ship.Ship(
@@ -52,6 +54,7 @@ class Game(object):
 
         # Bullet Gauge
         self.bullet_gauge = BulletGauge(self.screen, 10, self.spawn_bullet)
+        self.time_until_can_shoot = 0
 
         # Health bar
         self.health_bar = Bar(self.screen, self.ship.max_health,
@@ -107,7 +110,22 @@ class Game(object):
 
     def update(self, time_passed):
         # Send keyboard input
-        self.ship.handleKeyevents(pygame.key.get_pressed())
+        self.keys_pressed = pygame.key.get_pressed()
+
+        # Shoot bullet.
+        # If space bar is held down, bullets will be spammed because of
+        # the frame rate. So they need to be limited.
+        self.time_until_can_shoot -= time_passed
+        self.time_until_can_shoot = max(0, self.time_until_can_shoot)
+
+        if (self.keys_pressed[pygame.K_SPACE]):
+            if not self.paused and not self.game_over:
+                if self.time_until_can_shoot == 0:
+                    self.bullet_gauge.shoot()
+                    self.time_until_can_shoot = TIME_BETWEEN_BULLETS
+
+        # Send keyboard input to ship.
+        self.ship.handleKeyevents(self.keys_pressed)
 
         # Object updates
         self.ship.update(time_passed)
