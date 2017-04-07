@@ -11,7 +11,7 @@ class GameOverText(object):
 
         self.screen = screen
         self.screen_width, self.screen_height = self.screen.get_size()
-        self.pos = Vec2d(self.screen_width/2, self.screen_height/2)
+        self.pos = Vec2d(self.screen_width / 2, self.screen_height / 2)
 
         self.original_image = pygame.image.load(IMAGE_DIR).convert_alpha()
         self.image = self.original_image.copy()
